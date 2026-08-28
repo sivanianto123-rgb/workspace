@@ -1,0 +1,5 @@
+# This .gitignore deliberately does NOT list node_modules, so the
+# gitignore-audit check has something to flag when tests run against it.
+*.log
+dist/
+build/

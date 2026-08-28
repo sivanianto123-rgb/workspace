@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repodoc"
+version = "0.1.0"
+description = "Scan a git repository for leaked secrets, oversized files and .gitignore gaps before you commit."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Shivani", email = "sivanianto123@gmail.com" },
+]
+keywords = [
+    "git",
+    "secrets",
+    "security",
+    "linter",
+    "pre-commit",
+    "gitignore",
+    "static-analysis",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Version Control :: Git",
+]
+dependencies = [
+    "rich>=13.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+publish = [
+    "build>=1.0",
+    "twine>=5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-username/repodoc"
+Repository = "https://github.com/your-username/repodoc"
+Issues = "https://github.com/your-username/repodoc/issues"
+
+[project.scripts]
+repodoc = "repodoc.cli:main"
+
+# The package modules live directly in this directory (next to pyproject.toml),
+# so map the "repodoc" import package onto ".".
+[tool.setuptools]
+packages = ["repodoc", "repodoc.checks"]
+
+[tool.setuptools.package-dir]
+"repodoc" = "."
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
