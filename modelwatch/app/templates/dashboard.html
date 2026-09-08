@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ModelWatch &middot; Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>ModelWatch</h1>
+    <span class="tag">drift monitoring dashboard</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/dashboard">Refresh</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Overview</h2>
+      <div class="kpis" id="kpis"><span class="muted">loading&hellip;</span></div>
+    </section>
+
+    <section class="card">
+      <h2>Experiments &amp; runs</h2>
+      <p class="hint">Every training run, its held-out metrics, and how it was created.</p>
+      <div id="runs-table"><span class="muted">loading&hellip;</span></div>
+    </section>
+
+    <section class="card">
+      <h2>Model performance across runs</h2>
+      <p class="hint">Accuracy and F1 on each run's held-out test split, in run order.</p>
+      <div class="chart-wrap"><canvas id="perfChart"></canvas></div>
+    </section>
+
+    <div class="grid-2">
+      <section class="card">
+        <h2>Drift timeline</h2>
+        <div class="controls">
+          <label for="run-select" class="muted">Run</label>
+          <select id="run-select"></select>
+          <span class="muted" id="drift-meta"></span>
+        </div>
+        <p class="hint">Per-feature PSI at each drift check. Dashed line = significant-drift threshold (0.2).</p>
+        <div class="chart-wrap"><canvas id="driftChart"></canvas></div>
+      </section>
+
+      <section class="card">
+        <h2>Feature distribution: baseline vs current</h2>
+        <div class="controls">
+          <label for="feature-select" class="muted">Feature</label>
+          <select id="feature-select"></select>
+          <span class="muted" id="dist-meta"></span>
+        </div>
+        <p class="hint">Training baseline (blue) vs the most recent production window (orange).</p>
+        <div class="chart-wrap"><canvas id="distChart"></canvas></div>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>Retrain events</h2>
+      <p class="hint">Automatic drift-triggered retrain decisions and why they fired.</p>
+      <ul class="events" id="events"><li class="muted">loading&hellip;</li></ul>
+    </section>
+  </main>
+
+  <script>
+    window.DEFAULT_RUN_ID = {{ default_run_id | tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>

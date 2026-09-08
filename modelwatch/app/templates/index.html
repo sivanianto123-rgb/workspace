@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ModelWatch</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>ModelWatch</h1>
+    <span class="tag">ML model monitoring &amp; drift detection</span>
+    <nav>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/health">Health</a>
+    </nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>What this is</h2>
+      <p>
+        ModelWatch trains binary classifiers, serves predictions, logs every scored
+        request, and continuously compares the live input distribution against the
+        training baseline using <strong>PSI</strong> and the <strong>Kolmogorov&ndash;Smirnov</strong>
+        test. When too much of the feature space drifts, it retrains automatically.
+      </p>
+      <p><a href="/dashboard">Open the dashboard &rarr;</a></p>
+    </section>
+    <section class="card">
+      <h2>Core API</h2>
+      <table>
+        <tbody>
+          <tr><td class="mono">POST /api/train</td><td>Train a model (<code>model_type</code>, <code>hyperparams</code>)</td></tr>
+          <tr><td class="mono">POST /api/predict/&lt;run_id&gt;</td><td>Score rows and log them</td></tr>
+          <tr><td class="mono">GET /api/drift-check/&lt;run_id&gt;</td><td>PSI + KS drift report</td></tr>
+          <tr><td class="mono">POST /api/check-and-retrain/&lt;run_id&gt;</td><td>Drift check with auto-retrain</td></tr>
+          <tr><td class="mono">GET /health</td><td>Liveness probe</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
