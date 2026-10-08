@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Objects for Modern Life</title>
+<meta name="description" content="AURA is a product studio designing timeless objects for modern living.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader__count"><span id="preloaderCount">0</span>%</div>
+  <div class="preloader__label">AURA STUDIO</div>
+</div>
+
+<!-- Grain overlay -->
+<div class="grain"></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor">
+  <span class="cursor__label" id="cursorLabel"></span>
+</div>
+
+<!-- Nav -->
+<header class="nav">
+  <a href="#top" class="nav__logo">AURA</a>
+  <nav class="nav__links">
+    <a href="#products" data-cursor="VIEW">Products</a>
+    <a href="#studio" data-cursor="VIEW">Studio</a>
+    <a href="#journal" data-cursor="VIEW">Journal</a>
+  </nav>
+  <a href="#contact" class="nav__cta" data-cursor="GO">Get in touch</a>
+  <button class="nav__burger" id="burger" aria-label="Toggle menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#products">Products</a>
+  <a href="#studio">Studio</a>
+  <a href="#journal">Journal</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__marquee" aria-hidden="true">
+      <div class="hero__marquee-track">
+        <span>OBJECTS&nbsp;</span><span>FOR&nbsp;MODERN&nbsp;LIFE&nbsp;</span><span>—&nbsp;</span>
+        <span>OBJECTS&nbsp;</span><span>FOR&nbsp;MODERN&nbsp;LIFE&nbsp;</span><span>—&nbsp;</span>
+      </div>
+    </div>
+
+    <h1 class="hero__title">
+      <span class="line"><span class="word">Designed</span></span>
+      <span class="line"><span class="word">to&nbsp;be</span> <span class="word word--accent">felt.</span></span>
+    </h1>
+
+    <p class="hero__sub reveal-up">
+      AURA is a product studio crafting timeless objects — where form,
+      material and motion meet. Six collections. One obsession with detail.
+    </p>
+
+    <div class="hero__scroll reveal-up">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+
+    <div class="hero__index">
+      <span>01</span><span>/</span><span>06</span>
+    </div>
+  </section>
+
+  <!-- Marquee strip -->
+  <section class="strip">
+    <div class="strip__track">
+      <span>CRAFTED</span><span class="dot">●</span>
+      <span>PRECISE</span><span class="dot">●</span>
+      <span>TIMELESS</span><span class="dot">●</span>
+      <span>MINIMAL</span><span class="dot">●</span>
+      <span>CRAFTED</span><span class="dot">●</span>
+      <span>PRECISE</span><span class="dot">●</span>
+      <span>TIMELESS</span><span class="dot">●</span>
+      <span>MINIMAL</span><span class="dot">●</span>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="products" id="products">
+    <div class="section-head">
+      <h2 class="section-head__title reveal-up">Selected<br>Products</h2>
+      <p class="section-head__sub reveal-up">
+        A collection of objects designed in-house, built for people who
+        notice the difference between good and considered.
+      </p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--01">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="100" cy="70" r="38"/>
+            <path d="M62 70a38 38 0 0 1 76 0"/>
+            <path d="M48 70v40a14 14 0 0 0 14 14h8V84h-8a14 14 0 0 0-14 14"/>
+            <path d="M152 70v40a14 14 0 0 1-14 14h-8V84h8a14 14 0 0 1 14 14"/>
+            <path d="M100 124v26"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">01</span>
+          <h3 class="card__title">Echo&nbsp;Pods</h3>
+          <span class="card__cat">Audio — 2026</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--02">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="100" cy="100" r="54"/>
+            <circle cx="100" cy="100" r="3" fill="currentColor"/>
+            <path d="M100 68v32l20 14"/>
+            <path d="M100 30v12M100 158v12M30 100h12M158 100h12"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">02</span>
+          <h3 class="card__title">Orbit&nbsp;Watch</h3>
+          <span class="card__cat">Wearables — 2026</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--03">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M54 150V84a46 46 0 0 1 92 0v66"/>
+            <path d="M44 150h112"/>
+            <path d="M54 150v18M146 150v18"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">03</span>
+          <h3 class="card__title">Fold&nbsp;Chair</h3>
+          <span class="card__cat">Furniture — 2025</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--04">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M80 36h40l8 24-10 10v70a18 18 0 0 1-36 0V70l-10-10z"/>
+            <path d="M80 70h40"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">04</span>
+          <h3 class="card__title">Still&nbsp;Bottle</h3>
+          <span class="card__cat">Living — 2025</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--05">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M100 40 60 110h32l-10 50 58-70h-34z"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">05</span>
+          <h3 class="card__title">Volt&nbsp;Charger</h3>
+          <span class="card__cat">Power — 2026</span>
+        </div>
+      </article>
+
+      <article class="card" data-tilt>
+        <div class="card__visual card__visual--06">
+          <svg class="card__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M70 150 100 50l30 100"/>
+            <path d="M82 118h36"/>
+            <path d="M60 150h80"/>
+          </svg>
+        </div>
+        <div class="card__info">
+          <span class="card__index">06</span>
+          <h3 class="card__title">Arc&nbsp;Lamp</h3>
+          <span class="card__cat">Lighting — 2025</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Featured / sticky spotlight -->
+  <section class="spotlight" id="studio">
+    <div class="spotlight__visual">
+      <div class="spotlight__shape"></div>
+      <svg class="spotlight__icon" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="100" cy="70" r="38"/>
+        <path d="M62 70a38 38 0 0 1 76 0"/>
+        <path d="M48 70v40a14 14 0 0 0 14 14h8V84h-8a14 14 0 0 0-14 14"/>
+        <path d="M152 70v40a14 14 0 0 1-14 14h-8V84h8a14 14 0 0 1 14 14"/>
+      </svg>
+    </div>
+    <div class="spotlight__text">
+      <span class="eyebrow reveal-up">Featured — 01/06</span>
+      <h2 class="spotlight__title reveal-up">Echo Pods</h2>
+      <p class="reveal-up">
+        Precision-tuned 11mm drivers wrapped in a single piece of
+        anodized aluminum. Every seam is hidden, every edge is softened —
+        so the object disappears and the sound takes over.
+      </p>
+      <ul class="spotlight__specs reveal-up">
+        <li><span>Battery</span><span>32 hrs</span></li>
+        <li><span>Weight</span><span>4.2 g / pod</span></li>
+        <li><span>Material</span><span>Aerospace aluminum</span></li>
+        <li><span>Charging</span><span>USB‑C, wireless</span></li>
+      </ul>
+      <a href="#contact" class="link-arrow reveal-up" data-cursor="GO">Enquire about this piece →</a>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="stat">
+      <span class="stat__num" data-count="120">0</span>
+      <span class="stat__label">Products shipped</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num" data-count="40">0</span>
+      <span class="stat__label">Countries reached</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num" data-count="12">0</span>
+      <span class="stat__label">Design awards</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num" data-count="98">0</span>
+      <span class="stat__label">% satisfaction</span>
+    </div>
+  </section>
+
+  <!-- Journal / notes -->
+  <section class="journal" id="journal">
+    <div class="section-head">
+      <h2 class="section-head__title reveal-up">From the<br>Studio</h2>
+    </div>
+    <div class="journal__list">
+      <a href="#" class="journal__item reveal-up" data-cursor="READ">
+        <span class="journal__num">01</span>
+        <span class="journal__title">Why we design for ten‑year objects, not ten‑day trends</span>
+        <span class="journal__date">Mar 2026</span>
+      </a>
+      <a href="#" class="journal__item reveal-up" data-cursor="READ">
+        <span class="journal__num">02</span>
+        <span class="journal__title">Inside the Echo Pods: a teardown of our smallest product yet</span>
+        <span class="journal__date">Jan 2026</span>
+      </a>
+      <a href="#" class="journal__item reveal-up" data-cursor="READ">
+        <span class="journal__num">03</span>
+        <span class="journal__title">Material notes: anodized aluminum vs. recycled polymer</span>
+        <span class="journal__date">Nov 2025</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <h2 class="cta__title">
+      <span class="line"><span class="word">Let's&nbsp;build</span></span>
+      <span class="line"><span class="word">your&nbsp;next</span></span>
+      <span class="line"><span class="word word--accent">product.</span></span>
+    </h2>
+    <a href="mailto:hello@aura.studio" class="magnetic-btn" data-cursor="GO">
+      <span>hello@aura.studio</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 AURA Studio</span>
+  <div class="footer__social">
+    <a href="#" data-cursor="↗">Instagram</a>
+    <a href="#" data-cursor="↗">Twitter</a>
+    <a href="#" data-cursor="↗">LinkedIn</a>
+  </div>
+  <a href="#top" class="footer__top" data-cursor="UP">Back to top</a>
+</footer>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
