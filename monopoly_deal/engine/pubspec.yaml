@@ -1,0 +1,14 @@
+name: monopoly_deal_engine
+description: >
+  Pure-Dart rules engine for Monopoly Deal. Platform-agnostic: shared by the
+  Flutter client (local prediction/offline play) and the Dart game server
+  (authoritative state for online multiplayer).
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+dev_dependencies:
+  test: ^1.25.0
+  lints: ^4.0.0
