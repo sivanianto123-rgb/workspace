@@ -1,0 +1,15 @@
+{"id": "q1", "question": "What consensus algorithm does raftsim simulate, and what is it used for in real systems?", "expected_doc_id": "raftsim", "expected_keywords": ["raft", "leader", "consensus"]}
+{"id": "q2", "question": "What happens to an entry in Raft once a majority of the cluster has stored it?", "expected_doc_id": "raftsim", "expected_keywords": ["committed", "majority"]}
+{"id": "q3", "question": "What is a write-ahead log and what does txnkv do before changing anything else?", "expected_doc_id": "txnkv", "expected_keywords": ["write-ahead", "log", "disk"]}
+{"id": "q4", "question": "What system call does txnkv rely on for its durability guarantee?", "expected_doc_id": "txnkv", "expected_keywords": ["fsync"]}
+{"id": "q5", "question": "What does MVCC stand for and how does it let readers avoid blocking writers?", "expected_doc_id": "txnkv", "expected_keywords": ["multi-version", "concurrency", "snapshot"]}
+{"id": "q6", "question": "What algorithm does vecsearch implement for approximate nearest neighbour search?", "expected_doc_id": "vecsearch", "expected_keywords": ["hnsw", "hierarchical", "navigable"]}
+{"id": "q7", "question": "In vecsearch's HNSW index, what does the ef_construction parameter control?", "expected_doc_id": "vecsearch", "expected_keywords": ["ef_construction", "beam"]}
+{"id": "q8", "question": "Why does retrieval-augmented generation need fast nearest-neighbour search over embeddings?", "expected_doc_id": "vecsearch", "expected_keywords": ["embeddings", "nearest", "retrieval"]}
+{"id": "q9", "question": "What three kinds of problems does repodoc scan a git repository for?", "expected_doc_id": "repodoc", "expected_keywords": ["secrets", "oversized", "gitignore"]}
+{"id": "q10", "question": "What command do you run to scan the current directory with repodoc?", "expected_doc_id": "repodoc", "expected_keywords": ["repodoc", "scan"]}
+{"id": "q11", "question": "What two statistical tests does modelwatch use to detect drift in a feature?", "expected_doc_id": "modelwatch", "expected_keywords": ["psi", "kolmogorov"]}
+{"id": "q12", "question": "What does modelwatch do automatically when too many features have drifted significantly?", "expected_doc_id": "modelwatch", "expected_keywords": ["retrain", "retraining"]}
+{"id": "q13", "question": "What is the difference between data drift and concept drift as modelwatch defines them?", "expected_doc_id": "modelwatch", "expected_keywords": ["drift", "distribution"]}
+{"id": "q14", "question": "Why can a minority network partition never elect a competing leader in Raft?", "expected_doc_id": "raftsim", "expected_keywords": ["majority", "partition"]}
+{"id": "q15", "question": "Which production databases use HNSW as their default vector index?", "expected_doc_id": "vecsearch", "expected_keywords": ["faiss", "pinecone", "weaviate"]}

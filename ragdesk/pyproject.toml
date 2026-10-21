@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ragdesk"
+version = "0.1.0"
+description = "A webhook-triggered RAG assistant with a from-scratch TF-IDF retriever, deployable as an AWS Lambda function, with a retrieval+answer eval harness."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["flask>=2.3"]
+
+[project.optional-dependencies]
+llm = ["anthropic>=0.40"]
+dev = ["pytest>=7", "anthropic>=0.40"]
+
+[project.scripts]
+ragdesk = "ragdesk.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ragdesk*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
