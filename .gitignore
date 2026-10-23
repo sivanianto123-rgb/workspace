@@ -17,3 +17,6 @@ venv/
 
 # OS
 .DS_Store
+
+# epubfeed lives in its own separate git repo, not this one
+/epubfeed/
