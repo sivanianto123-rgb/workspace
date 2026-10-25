@@ -450,10 +450,19 @@
     var panels = Array.prototype.slice.call(document.querySelectorAll("[data-panel]"));
     var track = document.querySelector(".track");
 
+    // Frame-checked against hero.mp4's actual 10s runtime (progress * duration
+    // = video currentTime): clean portrait+swirl 0-2.0s, UI/app mockups
+    // 3.3-4.0s, neural-network graphic 4.6-6.8s, colourful "range" ribbons
+    // 7.0-8.3s, back to portrait 9.0-10s, with cross-fades between. Each
+    // panel's dwell window sits inside its beat's clean footage, and fades
+    // ride the video's own cross-fade into the next beat — the copy narrates
+    // exactly what's on screen underneath it.
     var CUES = [
-      [0.00, 0.00, 0.20, 0.30],
-      [0.38, 0.47, 0.60, 0.70],
-      [0.78, 0.87, 1.0, 1.0],
+      [0.00, 0.00, 0.16, 0.21],
+      [0.23, 0.28, 0.40, 0.45],
+      [0.47, 0.52, 0.66, 0.70],
+      [0.71, 0.75, 0.86, 0.90],
+      [0.91, 0.96, 1.00, 1.00],
     ];
     var DRIFT = 20;
     var FPS = 24;
