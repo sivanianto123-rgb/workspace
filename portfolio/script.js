@@ -449,6 +449,7 @@
     var meter = document.getElementById("meter");
     var panels = Array.prototype.slice.call(document.querySelectorAll("[data-panel]"));
     var track = document.querySelector(".track");
+    var contentVeil = document.getElementById("contentVeil");
 
     // Frame-checked against hero.mp4's actual 10s runtime (progress * duration
     // = video currentTime): clean portrait+swirl 0-2.0s, UI/app mockups
@@ -462,7 +463,7 @@
       [0.23, 0.28, 0.40, 0.45],
       [0.47, 0.52, 0.66, 0.70],
       [0.71, 0.75, 0.86, 0.90],
-      [0.91, 0.96, 1.00, 1.00],
+      [0.91, 0.95, 0.97, 1.00],
     ];
     var DRIFT = 20;
     var FPS = 24;
@@ -477,11 +478,55 @@
 
     var progress = 0, seekTo = 0, seekAt = 0, duration = 0, ready = false;
 
+    // Once the visitor scrolls past the hero track, the video stays as a
+    // fixed background behind every section (About, Skills, Experience,
+    // Work, Contact) instead of disappearing behind a solid panel — it just
+    // switches from scroll-scrubbing to a free-running loop, since there's
+    // no more "story" left to scrub through. Scrolling back up into the
+    // hero hands control back to the scrub.
+    var ambient = false;
+    function updateAmbient() {
+      var trackEnd = track.offsetHeight - window.innerHeight;
+      var pastHero = trackEnd <= 0 ? window.pageYOffset > 10 : window.pageYOffset >= trackEnd - 2;
+      if (pastHero && !ambient) {
+        ambient = true;
+        clip.loop = true;
+        var p = clip.play();
+        if (p && p.catch) p.catch(function () {});
+      } else if (!pastHero && ambient) {
+        ambient = false;
+        clip.loop = false;
+        clip.pause();
+        seekAt = seekTo;
+        shownFrame = Math.round(seekAt * FPS);
+        try { clip.currentTime = seekAt; } catch (e) {}
+      }
+    }
+
+    // Keeps the fixed video dimmed-but-visible behind the hero, then ramps
+    // a dark veil in as the hero track ends so the About/Skills/Experience/
+    // Work/Contact copy stays legible over whatever the loop is showing.
+    function updateVeil() {
+      var trackEnd = track.offsetHeight - window.innerHeight;
+      var y = window.pageYOffset;
+      var v;
+      if (trackEnd <= 0) {
+        v = y > 10 ? 1 : 0;
+      } else {
+        var startY = trackEnd * 0.88;
+        var endY = trackEnd + window.innerHeight * 0.4;
+        v = clamp((y - startY) / (endY - startY), 0, 1);
+      }
+      contentVeil.style.opacity = v;
+    }
+
     function trackProgress() {
       var max = track.offsetHeight - window.innerHeight;
       var y = window.pageYOffset;
       progress = max > 0 ? clamp(y / max, 0, 1) : (y > 10 ? 1 : 0);
       if (duration) seekTo = progress * duration;
+      updateAmbient();
+      updateVeil();
     }
 
     var painted = -1;
@@ -507,7 +552,7 @@
     function frame(now) {
       var dt = lastNow ? Math.min(now - lastNow, 100) : 16.7;
       lastNow = now;
-      if (ready && duration) {
+      if (ready && duration && !ambient) {
         var gap = seekTo - seekAt;
         if (Math.abs(gap) > 0.0008) {
           seekAt = Math.abs(gap) < 0.25 / FPS ? seekTo : seekAt + gap * (1 - Math.exp(-dt / FOLLOW_MS));

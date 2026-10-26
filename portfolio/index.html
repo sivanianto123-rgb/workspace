@@ -17,10 +17,11 @@
 :root{
   --bg:#060910;
   --bg-soft:#0a0e18;
-  --surface:#0e1320;
-  --surface-2:#131a2b;
-  --border:rgba(226,232,255,.10);
-  --border-strong:rgba(226,232,255,.18);
+  --surface:rgba(14,19,32,.56);
+  --surface-2:rgba(19,26,43,.62);
+  --surface-solid:#0e1320;
+  --border:rgba(226,232,255,.12);
+  --border-strong:rgba(226,232,255,.22);
   --fg:#f3f5fb;
   --fg-soft:rgba(243,245,251,.68);
   --fg-faint:rgba(243,245,251,.42);
@@ -152,12 +153,17 @@ ul{margin:0; padding:0; list-style:none;}
 .scroll-cue i{width:1px; height:26px; background:linear-gradient(to bottom, var(--fg-faint), transparent); display:block; animation:cueMove 1.8s ease-in-out infinite;}
 @keyframes cueMove{0%{transform:scaleY(.4); opacity:.3;} 50%{transform:scaleY(1); opacity:1;} 100%{transform:scaleY(.4); opacity:.3;}}
 
-/* ---------- content body ---------- */
-.content{position:relative; z-index:10; background:var(--bg);}
-.content::before{
-  content:""; position:absolute; top:-200px; left:0; right:0; height:200px;
-  background:linear-gradient(to bottom, transparent, var(--bg)); pointer-events:none;
+/* ---------- content veil: keeps the fixed video visible but dimmed
+   behind every section, from "about" down to the footer ---------- */
+.content-veil{
+  position:fixed; inset:0; z-index:8; pointer-events:none; opacity:0;
+  background:
+    linear-gradient(180deg, rgba(6,9,16,.2) 0%, rgba(6,9,16,.86) 14%, rgba(6,9,16,.9) 100%);
+  will-change:opacity;
 }
+
+/* ---------- content body ---------- */
+.content{position:relative; z-index:10; background:transparent;}
 section.block{
   padding:clamp(72px,10vw,128px) 0; border-bottom:1px solid var(--border);
   scroll-snap-align:start; scroll-margin-top:0;
@@ -187,7 +193,7 @@ p.lede{font-size:clamp(15px,1.15vw,17px); color:var(--fg-soft); max-width:60ch; 
 .badges span{
   font-size:12.5px; padding:8px 14px; border:1px solid var(--border-strong); border-radius:999px; color:var(--fg-soft);
 }
-.stat-card{background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:26px; display:flex; flex-direction:column; gap:22px;}
+.stat-card{background:var(--surface); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid var(--border); border-radius:18px; padding:26px; display:flex; flex-direction:column; gap:22px;}
 .stat{display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--border); padding-bottom:16px;}
 .stat:last-child{border-bottom:none; padding-bottom:0;}
 .stat .n{font-family:'Instrument Serif', serif; font-size:30px; color:var(--accent);}
@@ -195,7 +201,7 @@ p.lede{font-size:clamp(15px,1.15vw,17px); color:var(--fg-soft); max-width:60ch; 
 
 /* ---------- skills ---------- */
 .skill-groups{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:22px;}
-.skill-card{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:22px;}
+.skill-card{background:var(--surface); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid var(--border); border-radius:16px; padding:22px;}
 .skill-card h4{margin:0 0 14px; font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-2);}
 .skill-pills{display:flex; flex-wrap:wrap; gap:8px;}
 .skill-pills span{font-size:12.5px; padding:6px 12px; border-radius:999px; background:var(--surface-2); color:var(--fg-soft); border:1px solid var(--border);}
@@ -227,7 +233,8 @@ p.lede{font-size:clamp(15px,1.15vw,17px); color:var(--fg-soft); max-width:60ch; 
 
 .proj-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:18px;}
 .proj-card{
-  position:relative; background:var(--surface); border:1px solid var(--border); border-radius:18px;
+  position:relative; background:var(--surface); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--border); border-radius:18px;
   padding:22px; cursor:pointer; overflow:hidden; transition:border-color .3s var(--ease), transform .3s var(--ease);
   display:flex; flex-direction:column; min-height:220px;
 }
@@ -259,7 +266,7 @@ p.lede{font-size:clamp(15px,1.15vw,17px); color:var(--fg-soft); max-width:60ch; 
 .modal{
   position:fixed; z-index:151; left:50%; top:50%; width:min(880px, 92vw); max-height:88vh;
   transform:translate(-50%,-48%) scale(.97); opacity:0; pointer-events:none;
-  background:var(--surface); border:1px solid var(--border-strong); border-radius:22px; overflow:hidden;
+  background:var(--surface-solid); border:1px solid var(--border-strong); border-radius:22px; overflow:hidden;
   transition:opacity .4s var(--ease), transform .4s var(--ease);
   display:flex; flex-direction:column;
 }
@@ -421,6 +428,8 @@ footer.site-foot{
 
 <div class="track"></div>
 
+<div class="content-veil" id="contentVeil"></div>
+
 <div class="content" id="content">
 
   <section class="block" id="about">
@@ -518,7 +527,7 @@ footer.site-foot{
 </div>
 
 <footer class="site-foot">
-  <span>&copy; <span id="year"></span> Sivani T. — built with a scroll-scrubbed video, Flutter and a lot of from-scratch systems.</span>
+  <span>&copy; <span id="year"></span> Sivani T. — built with a scroll-scrubbed video that keeps playing in the background, Flutter and a lot of from-scratch systems.</span>
   <span>Chennai, India</span>
 </footer>
 
