@@ -3,12 +3,42 @@
 
   /* ================= DATA ================= */
 
+  // Logos are bundled locally (assets/icons/stack/<slug>.svg, pulled from the
+  // simple-icons package) and looked up by this name -> slug map wherever a
+  // skill pill, marquee entry or project tag matches a real product/tool
+  // name. Phrases that aren't a named product (e.g. "System Design", "Prompt
+  // Engineering") have no logo and just render as plain text, same as before.
+  var TECH_ICONS = {
+    "flutter": "flutter", "dart": "dart", "react": "react", "react.js": "react",
+    "next.js": "nextdotjs", "typescript": "typescript", "javascript": "javascript",
+    "html5": "html5", "css3": "css3", "figma": "figma", "python": "python",
+    "flask": "flask", "graphql": "graphql", "node.js": "nodedotjs", "express": "express",
+    "postgresql": "postgresql", "mysql": "mysql", "git": "git", "github": "github",
+    "pytest": "pytest", "linux": "linux", "bash": "gnubash", "firebase": "firebase",
+    "numpy": "numpy", "chart.js": "chartdotjs", "scikit-learn": "scikitlearn",
+    "sqlalchemy": "sqlalchemy",
+  };
+  function iconFor(name) {
+    var slug = TECH_ICONS[String(name).toLowerCase()];
+    return slug ? "assets/icons/stack/" + slug + ".svg" : null;
+  }
+  function techLabel(name, extraClass) {
+    var icon = iconFor(name);
+    var cls = "tech-label" + (extraClass ? " " + extraClass : "");
+    if (!icon) return '<span class="' + cls + '">' + name + "</span>";
+    return (
+      '<span class="' + cls + ' has-icon">' +
+      '<img class="tech-icon" src="' + icon + '" alt="" loading="lazy" width="16" height="16">' +
+      "<span>" + name + "</span></span>"
+    );
+  }
+
   var SKILLS = [
-    { group: "Frontend", items: ["Flutter", "Dart", "React.js", "Next.js", "TypeScript", "JavaScript", "HTML5/CSS3", "Figma"] },
-    { group: "Backend & APIs", items: ["Python (Flask)", "RESTful APIs", "GraphQL", "Node.js", "Express", "Microservices"] },
+    { group: "Frontend", items: ["Flutter", "Dart", "React.js", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "Figma"] },
+    { group: "Backend & APIs", items: ["Python", "Flask", "RESTful APIs", "GraphQL", "Node.js", "Express", "Microservices"] },
     { group: "Databases", items: ["PostgreSQL", "MySQL", "PL/SQL", "Relational Schema Design"] },
     { group: "AI / ML Systems", items: ["Prompt Engineering", "Structured Outputs", "Vector Search (HNSW, ANN)", "ML Model Monitoring", "Drift Detection (PSI, KS)"] },
-    { group: "Architecture & Tools", items: ["System Design", "Distributed Systems", "Git / GitHub", "PR Reviews", "Pytest", "Linux / Bash"] },
+    { group: "Architecture & Tools", items: ["System Design", "Distributed Systems", "Git", "GitHub", "PR Reviews", "Pytest", "Linux", "Bash"] },
   ];
 
   var SKILL_MARQUEE = [
@@ -211,14 +241,16 @@
       card.appendChild(el("h4", null, g.group));
       var pills = el("div", "skill-pills");
       g.items.forEach(function (s) {
-        pills.appendChild(el("span", null, s));
+        pills.insertAdjacentHTML("beforeend", techLabel(s, "skill-pill"));
       });
       card.appendChild(pills);
       wrap.appendChild(card);
     });
 
     var track = document.getElementById("marqueeTrack");
-    var html = SKILL_MARQUEE.map(function (s) { return "<span>" + s + " <i>&#10022;</i></span>"; }).join("");
+    var html = SKILL_MARQUEE.map(function (s) {
+      return '<span class="marquee-item">' + techLabel(s) + " <i>&#10022;</i></span>";
+    }).join("");
     track.innerHTML = html + html; // duplicate for seamless loop
   }
 
@@ -253,7 +285,7 @@
         '<h3 class="proj-name">' + p.name + "</h3>" +
         '<p class="proj-tagline">' + p.tagline + "</p>" +
         '<div class="proj-foot">' +
-          '<div class="proj-tags">' + p.tags.slice(0, 2).map(function (t) { return "<span>" + t + "</span>"; }).join("") + "</div>" +
+          '<div class="proj-tags">' + p.tags.slice(0, 2).map(function (t) { return techLabel(t); }).join("") + "</div>" +
           '<span class="proj-view">View result <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>' +
         "</div>";
       card.addEventListener("click", function () { openModal(p); });
@@ -296,8 +328,7 @@
     modalHighlights.innerHTML = "";
     p.highlights.forEach(function (h) { modalHighlights.appendChild(el("li", null, h)); });
 
-    modalTags.innerHTML = "";
-    p.tags.forEach(function (t) { modalTags.appendChild(el("span", null, t)); });
+    modalTags.innerHTML = p.tags.map(function (t) { return techLabel(t); }).join("");
 
     modalLinks.innerHTML = "";
     var linkMap = { source: "Source &rarr;", readme: "Read-me &rarr;", live: "Live site &rarr;" };

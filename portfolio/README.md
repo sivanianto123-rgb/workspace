@@ -42,3 +42,15 @@ Pages there — no code changes needed.
 All copy — skills, experience, and the project list — lives in one place:
 the top of `script.js` (`SKILLS`, `EXPERIENCE`, `PROJECTS`). Project images
 live in `assets/img/`; the hero video is `assets/video/hero.mp4`.
+
+## Tech-stack logos
+
+`assets/icons/stack/*.svg` are recolored icons from the
+[simple-icons](https://simpleicons.org) package (CC0-1.0 — public domain, no
+attribution required), pulled locally rather than from a CDN so the site has
+no runtime third-party dependency. `TECH_ICONS` in `script.js` maps a skill
+or tag's exact name (case-insensitive) to one of these files; any name
+without an entry just renders as plain text, so new skills/tags work without
+a logo until one is added. To add a logo: drop an SVG at
+`assets/icons/stack/<slug>.svg` with its path(s) given an explicit `fill`
+color, then add `"name": "<slug>"` to `TECH_ICONS`.
