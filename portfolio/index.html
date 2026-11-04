@@ -372,10 +372,17 @@ stage.addEventListener('pointermove', e => {
   if (hit) { nameEl.textContent = hit.title + '  ↗'; nameEl.style.transform = `translate(${e.clientX + 14}px,${e.clientY + 16}px)`; }
 });
 stage.addEventListener('click', e => {
-  if (e.target.closest('a')) return;
+  // clicks on real controls, or anywhere while the menu is open, are not card clicks
+  if (e.target.closest('a,button,#menu-panel') || panel.classList.contains('open')) return;
   const hit = hitTest(e);
-  if (hit) open(hit.url, '_blank', 'noopener');
+  if (hit) openSite(hit.url);
 });
+// open the live site in a new tab; if a pop-up blocker stops that, go there in this tab instead
+function openSite(url) {
+  const w = window.open(url, '_blank');
+  if (w) w.opener = null;
+  else location.href = url;
+}
 
 /* ---------- loop ---------- */
 function loop() {
