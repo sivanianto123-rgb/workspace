@@ -1,0 +1,9 @@
+{
+  "name": "sivani-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static UI/UX portfolio (plain HTML + three.js). No build step needed.",
+  "scripts": {
+    "build": "echo \"static site, nothing to build\""
+  }
+}
