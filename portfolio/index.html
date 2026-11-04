@@ -52,6 +52,11 @@ body{font-family:'Inter Tight',system-ui,sans-serif;color:var(--ink);background:
   #hint,#pager{display:none}.bot p{max-width:17em;font-size:11px}
 }
 /* additions: clickable grid + accessible project list */
+#links{position:absolute;inset:0;z-index:10;pointer-events:none}
+.card-link{position:absolute;display:none;border-radius:6px;pointer-events:auto;cursor:pointer}
+.card-link.on{display:block}
+.card-link:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+#name{z-index:11}
 #hint{color:var(--ink);text-decoration:none}
 .stage.link{cursor:pointer}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -127,6 +132,7 @@ body{font-family:'Inter Tight',system-ui,sans-serif;color:var(--ink);background:
       <div class="mid">UI<s>/</s>UX<s>/</s>WEB<s>/</s>MOBILE</div>
       <button class="r" id="reel">VIEW SHOWREEL</button>
     </footer>
+    <div id="links"></div>
     <div id="name"></div>
     <nav class="sr" id="work" aria-label="Selected work"><ul id="worklist"></ul></nav>
   </main>
@@ -353,6 +359,29 @@ function render() {
     } else { c.mesh.visible = false; c.rect = null; }
   }
   renderer.render(scene, camera);
+  placeLinks(pp);
+}
+
+/* ---------- real links over the grid cards ---------- */
+// One <a> per grid slot, positioned over the card's on-screen rectangle once it has landed.
+const cardLinks = WORK.map(([title, , url], i) => {
+  const a = document.createElement('a');
+  Object.assign(a, {href:url, target:'_blank', rel:'noopener', className:'card-link'});
+  a.setAttribute('aria-label', `${title} — open live site`);
+  a.tabIndex = -1;
+  $('links').appendChild(a);
+  return a;
+});
+function placeLinks(pp) {
+  for (const c of cards) {
+    const a = cardLinks[c.i], g = c.rect;
+    const live = g && pp > .86;            // card has landed in the grid
+    a.classList.toggle('on', !!live);
+    a.tabIndex = live ? 0 : -1;
+    if (!live) continue;
+    const w = g.w / g.vw * W, h = g.h / g.vh * H;
+    a.style.cssText = `left:${(g.x / g.vw + .5) * W - w / 2}px;top:${(.5 - g.y / g.vh) * H - h / 2}px;width:${w}px;height:${h}px`;
+  }
 }
 
 /* ---------- hover + click: grid cards open the live site ---------- */
@@ -371,18 +400,8 @@ stage.addEventListener('pointermove', e => {
   stage.classList.toggle('link', !!hit);
   if (hit) { nameEl.textContent = hit.title + '  ↗'; nameEl.style.transform = `translate(${e.clientX + 14}px,${e.clientY + 16}px)`; }
 });
-stage.addEventListener('click', e => {
-  // clicks on real controls, or anywhere while the menu is open, are not card clicks
-  if (e.target.closest('a,button,#menu-panel') || panel.classList.contains('open')) return;
-  const hit = hitTest(e);
-  if (hit) openSite(hit.url);
-});
-// open the live site in a new tab; if a pop-up blocker stops that, go there in this tab instead
-function openSite(url) {
-  const w = window.open(url, '_blank');
-  if (w) w.opener = null;
-  else location.href = url;
-}
+// Clicking a grid card is handled by a real <a> link laid exactly over it (see placeLinks),
+// so it works in every browser — no window.open, nothing for a pop-up blocker to stop.
 
 /* ---------- loop ---------- */
 function loop() {
