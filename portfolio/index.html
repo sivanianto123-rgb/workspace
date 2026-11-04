@@ -7,6 +7,11 @@
 <meta name="description" content="UI/UX portfolio of T Sivani — a ribbon of live website work sweeps through space, then lands in a grid you can click into.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- warm up connections to the hosts of the live sites in the grid -->
+<link rel="preconnect" href="https://sivanianto123-rgb.github.io">
+<link rel="preconnect" href="https://epubfeed.vercel.app">
+<link rel="preconnect" href="https://monolithe-sneaker.web.app">
+<link rel="dns-prefetch" href="https://sivanianto123-rgb.github.io">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
 <style>
@@ -360,6 +365,8 @@ function render() {
   }
   renderer.render(scene, camera);
   placeLinks(pp);
+  updatePill();
+  if (pp > .6) preloadSites();
 }
 
 /* ---------- real links over the grid cards ---------- */
@@ -394,12 +401,35 @@ function hitTest(e) {
   }
   return hit;
 }
-stage.addEventListener('pointermove', e => {
-  const hit = hitTest(e);
+// The name pill is re-checked every frame against the last pointer position, so it also
+// disappears when the page scrolls away from the grid without the mouse moving.
+const pointer = {x:-1, y:-1, inside:false};
+stage.addEventListener('pointermove', e => { pointer.x = e.clientX; pointer.y = e.clientY; pointer.inside = e.pointerType === 'mouse'; });
+stage.addEventListener('pointerleave', () => { pointer.inside = false; });
+function updatePill() {
+  const hit = pointer.inside && !panel.classList.contains('open') ? hitTest({clientX:pointer.x, clientY:pointer.y}) : null;
   nameEl.style.opacity = hit ? 1 : 0;
   stage.classList.toggle('link', !!hit);
-  if (hit) { nameEl.textContent = hit.title + '  ↗'; nameEl.style.transform = `translate(${e.clientX + 14}px,${e.clientY + 16}px)`; }
-});
+  if (hit) { nameEl.textContent = hit.title + '  ↗'; nameEl.style.transform = `translate(${pointer.x + 14}px,${pointer.y + 16}px)`; }
+}
+
+/* ---------- preload the live sites ---------- */
+// As soon as the grid starts to form, fetch each site's page in the background so a click
+// opens it near-instantly. Speculation rules where supported (Chrome/Edge), <link rel=prefetch> otherwise.
+let preloaded = false;
+function preloadSites() {
+  if (preloaded) return; preloaded = true;
+  const urls = WORK.slice(0, 6).map(w => w[2]);
+  if (HTMLScriptElement.supports?.('speculationrules')) {
+    const s = document.createElement('script'); s.type = 'speculationrules';
+    s.textContent = JSON.stringify({prefetch:[{source:'list', urls, requires:['anonymous-client-ip-when-cross-origin']}]});
+    document.head.appendChild(s);
+  }
+  for (const href of urls) {
+    const l = document.createElement('link'); l.rel = 'prefetch'; l.href = href; l.as = 'document';
+    document.head.appendChild(l);
+  }
+}
 // Clicking a grid card is handled by a real <a> link laid exactly over it (see placeLinks),
 // so it works in every browser — no window.open, nothing for a pop-up blocker to stop.
 
